@@ -12125,11 +12125,18 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><h4>Regularization:</h4></p>
 <p><p>Regularization is a way to correct overfitting by adding a pentalty on the different parameters of the model to reduce the freedom of the model. Hence, the model will be less likely to fir the noise of the training data and will improve generalization abilities of the model. There are a few popular regularization techniques:</p></p>
-<ul>
-<li><b> Lasso (L1 Regularization) </b> - </li>
-<li><b> Ridge (L2 Regularization) </b> - </li>
-<li><b> Elastic Net (L1/L2 Regularization) </b> - </li>
-</ul>
+<p><ul></p>
+<p><li><b> Lasso (L1 Regularization) </b> - Adds an absolute value of magnitude of the coefficient as penalty term to the loss function. We add $\lambda \sum_{j=1}^p |\beta_j|$ to the loss function. Lasso shrinks the less important feature's coefficient to zero. This works well when we have a huge number of features and helps with feature selection, which L2 Regularization will not do.</li></p>
+<p><li><b> Ridge (L2 Regularization) </b> - Adds squared magnitude of coefficient as penalty to the loss function. We add $\lambda \sum_{j=1}^p |\beta_{j}^2|$ as penalty to the loss function. L2 regularization generally gives better accuracy on unseen data comapred to L1 regularization.</li>
+&lt;/ul&gt;</p>
+<center><img src="Images/l1_l2.png" style="width:600px;height:400px"></center>
+<p>Above are plots of the absolute value and square functions. When minimizing a loss function with a regularization term, each of the entries in the parameter vector theta are “pulled” down towards zero. Think of each entry in theta lying on one the above curves and being subjected to “gravity” proportional to the regularization hyperparameter k. In the context of L1-regularization, the entries of theta are pulled towards zero proportionally to their absolute values — they lie on the red curve. 
+In the context of L2-regularization, the entries are pulled towards zero proportionally to their squares — the blue curve.</p>
+<p>At first, L2 seems more severe, but the caveat is that, approaching zero, a different picture emerges:</p>
+<center><img src="Images/l1_l2_near_0.png" style="width:600px;height:400px"></center>
+<p>The result is that L2 regularization drives many of your parameters down, but will not necessarily eradicate them, since the penalty all but disappears near zero. Contrarily, L1 regularization forces non-essential entries of theta all the way to zero.</p>
+<p>An alternate regularization technique is called <b>ElasticNet</b>, which is $\frac{L_1}{L_2}$. It is a compromise between Lasso and Ridge regression. It is depicted as the orange curve in the graph below:</p>
+<center><img src="Images/elastic_net.png" style="width:600px;height:400px"></center>
 </div>
 </div>
 </div>
@@ -12173,7 +12180,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4>Hyperparameters:</h4>
+<h4>Parameters v.s. Hyperparameters:</h4>
 </div>
 </div>
 </div>
