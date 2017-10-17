@@ -11810,6 +11810,15 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<center><h1>Machine Learning Principles</h1></center>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p><h4>Structured vs Unstructured Data:</h4></p>
 <p><p>There are two types of data that can be used in machine learning models:</p></p>
 <ul>
@@ -11882,6 +11891,21 @@ div#notebook {
 </tr>
 </table>
 <p>If we wish to be able to predict the price of a home given its square feet and number of bedrooms than we can have a two dimensional feature vector consist of the square feet and number of bedrooms. Our feature vectors for the above dataset would be: [1245, 3], [845,1], [3580,5]. We call the features that go into the model inputs and the result from inputting the features into the model the targets. The targets for the above example would be [220500.22],[12500.21],[524589.55]. Where each output corresponds to a target.</p>
+<p>If we have categorical variables, we need to encode them into numerical quantities. Take for instance the following dataset:</p>
+<table>
+<td>items</td>
+<tr>
+<td>apple,banana</td>
+</tr>
+<tr>
+<td>carrots</td>
+</tr>
+<tr>
+<td>apple,carrots,rice,milk</td>
+</tr>
+</table>
+<p>In order for our machine learning model to process this data, we have to convert it into a numerical quantity. To do so we could one-hot encode the variables. This means that we take a set of all items and create a vector with dimension that is the length of the set. For each item we have in the sample, we place a 1 in the corresponding index. The dataset above in one-hot encoded form would be as follows: [1,1,0,0,0],[0,0,1,0,0],[1,0,1,1,1] as our set of items is {apple, banana, carrots, rice, milk}. We see that index 0 corresponds to apple, index 1 to banana, and so on.</p>
+<p>If we have a set of text documents, say tweets or emails, we might choose to count the number of times the words appear instead of one-hot encoding the words. This is an alterante type of feature we can use for text documents.</p>
 </div>
 </div>
 </div>
@@ -11909,6 +11933,11 @@ div#notebook {
 <li><b>Classification with missing inputs:</b> With regular classification above, each input vector $x$ has to have the same dimension. This means that if we have a sample $x_1$ = [5,13,4,5] then $x_2$ must have 4 values like $x_1$, making it a vector of dimension 4. If we do not have a gurantee that every measurement in the input vector will be provided then this makes classification more difficult. For a solution to this problem, we need the learning algorithm to define a single function mapping from the input vector to a categorical output. The learning algorithm learns a set of functions where each function corresponds to classifying the input $x$ with a different subset of its missing input values. If we have an $n$ dimensional feature vector than there will be $2^n$ different classification functions needed for each possible set of missing inputs.</li>
 <li><b>Regression:</b> Regression tasks involve predicting a continuous value given an input $x$. Continuous data are not restricted to defined separate values, but can occupy any value over a continuous range. Between any two continuous data values there may be an infinite number of others. Continuous data are always essentially numeric. For instance, predicting the price of a stock is a regression problem since the value of the stock we predict could be any real number between 0 and infinity. Mathematically speaking, we take an input $x$ and pass it through a function $f:\mathbb{R}^n \rightarrow \mathbb{R}$ which means we take our $n$ dimensional input vector, pass it through the function $f$ and output a single real number.</li>
 <li><b>Transcription: </b> Transcription involves the machine learning algorithm observing some unstructured data and transcribing it into a discrete textual form. For example, the algorithm might see an image of a license plate and transcribe it into text. Alternatively, the algorithm could be given a song and transcribe the audio into textual lyrics.</li>
+<li><b>Machine Translation: </b>machine translations takes a sequence of symbols in one language and converts it into a sequence of symbols in another language. For example, converting a sentence from french to english. Google translate is an example of machine translation. </li>
+<li><b>Anomaly Detection: </b>anomaly detection deals with the indentification of items, events, or observations which do not conform to an expected pattern or other items in a dataset. Here we search for unusual or atypical items in the dataset. For instance, looking for fradulent checks or identifying fraudlent credit card transactions are examples of anomaly detection.</li>
+<li><b>Synthesis and Sampling: </b>With synthesis and sampling, the machine learning algorithm is asked to generate new examples that are similar to those in the training data. This is commonly used to generate data, such as healthcare data, which can be expensive to obtain or limited in size.</li>
+<li><b>Imputation of Missing Values: </b>Here, the machine learning algorithm is given a sample $x$ and where some entries $x_i$ are missing and the algorithm must predict the missing entries.</li>
+<li><b>Clustering - </b> Grouping samples of the data together.</li>
 </ol>
 </div>
 </div>
@@ -11918,16 +11947,19 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4>Types of Machine Learning:</h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4>Feature Vectors:</h4>
+<p><h4>Types of Machine Learning:</h4></p>
+<p><p>Machine learning algorithms can broadly be catagorized as either <b>supervised</b> or <b>unsupervised</b> learning problems. Unsupervised learning algorithms draw inferences from datasets consisting of input data without labeled responses (no targets). Here we want to discover an internal representation from the inputs only. With unsupervised learning there is no interest in prediction because there is not an associated response variable $y_i$ for each $x_i$. The goal is to discover interesting things about the data. It is typically used for the following tasks:</p></p>
+<p><ol></p>
+<li><b>Clustering - </b> exploratory data analysis to find hidden patterns or grouping in data. The clusters are modeled using a measure of similarity which is defined upon metrics such as Euclidean or probabilistic distance.</li>
+<li><b>Dimensionality Reduction - </b> Reducing the dimension of the input features in a manner that lets us still represent the true distribution of the dataset.</li>
+<li><b>Anomaly Detection - </b> the identification of items, events or observations which do not conform to an expected pattern or other items in a dataset</li>
+</ol>
+<p>Supervised learning algorithms observe a set of features $x_1,x_2,...,x_n$ as well as a label or a set of labels or target variables $y_1,y_2,...,y_n$ for each input. Supervised learning seeks to predict $y$ from $x$ by creating a function $f$ that takes an input $x$ and produces an output $y$ ($f(x) = y$). Supervised learning is typically used for the following tasks:</p>
+<ol>
+<li><b>Regression - </b> predicting a value on a continuous domain.</li>
+<li><b>Classification - </b> predicting what class a sample falls in.</li><p>&lt;/ol&gt;</p>
+<p><p>Supervised learning can be thought of as a teacher who shows a machine learning system what to do, while unspervised learning must make sense of the data without the instructor's help. The most common tasks for supervised learning are regression and clustering while the most common task for unsupervised learning is clustering. This can be summed up in the image below:</p></p>
+<center><img src="Images/ml_su.png"></center>
 </div>
 </div>
 </div>
@@ -11976,12 +12008,14 @@ div#notebook {
 <li>Mallet</li>
 <li>Elki</li>
 </ul>
+<br>
 <b>JavaScript</b>
 <ul>
 <li>brain.js</li>
 <li>Synaptic</li>
 <li>Mind</li>
 </ul>
+<br>
 <b>C++</b>
 <ul>
 <li>mlpack</li>
@@ -11989,6 +12023,7 @@ div#notebook {
 <li>Dlib</li>
 <li>shogun</li>
 </ul>
+<br>
 <b>Julia</b>
 <ul>
 <li>MLBase.jl</li>
@@ -11997,6 +12032,660 @@ div#notebook {
 <li>Mocha.jl</li>
 </ul>
 <p>Python is a great high-level language for rapid development of machine learning algorithms. It is used by many machine learning engineers, researchers, and developers in a wide variety of top companies and has many modules to assist in the machine learning process. All code in this guide will be written in python.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>Performance Measure:</h4></p>
+<p><p>To evaluate the abilities of a machine learning algorithm, we must deisgn a quantitative measure of its performance. For classification tasks we often measure:</p></p>
+<ol>
+<li> <b>Accuracy </b> - the proportion of examples for which the model produces the correct output. This is the most common evaluation metric for classification problems</li>
+<li><b>Error Rate </b>- the proportion of examples for which the model produces an incorrect output.</li>
+<li><b>Logarithmic Loss </b>- A performance metric for evaluating the predictions of probabilities of membership to a given class. The scalar probability between 0 and 1 can be seen as a measure of confidence for a prediction by an algorithm.</li>
+<li><b>Area Under ROC Curve </b> - A performance metric for binary classification problems. The AUC represents the model's ability to discriminate between positive and negative classes. An area of 1.0 represents a model that made all predictions perfectly. An area of 0.5 represents a model as good as random guesses.</li>
+<li><b>Confusion Matrix </b> - A presentation of the accuracy of a model with two or more classes. The table presents predictions on the x-axis and accuracy outcomes on the y-axis. The cells of the table are the number of predictions made by a machine learning algorithm. Higher numbers on the diagonal indicate that more correct predictions were made than incorrect predictions.</li>
+</ol><p><p>For regression tasks there are three common metrics for evaluating predictions:</p></p>
+<ol>
+<li><b>Mean Absolute Error </b> - The sum of the absolute differences between predictions and actual values. This gives an idea of how wrong the predictions were. Here, we get an idea of the magnitude of the error, but no idea of the direction (we cannot see if we were over or under predictig).</li>
+<li><b>Mean Squared Error </b> - MSE measures the average of the squares of the errors or deviations, the difference between the estimator and what is estimated. For each pair of values we have $\Sigma_{i}^n (y_i - x_i)^2$. Here, we always get a positive number.</li>
+<li><b>Root Mean Squared Error </b> - RMSE is the square root of the mean squared error.</li>
+<li><b>$R^2$ </b> - a goodness of fit measure, how well the predictions align with the actual results as a value 0 (no fit) to 1 (perfect fit).</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>Train/Test Split:</h4></p>
+<p>We need to split our dataset into two groups: One group will be used to train the model and the second group will be used to measure the resulting model's error. We call this a train/test split. We pass the training data into the model so that the model learn's a subset of the data. We then evaluate the model on the test set so that we can see the performance of the model. This allows us to see performance in an unbiased way as we test our model on data that it has not seen.</p>
+<center><img src="Images/holdout.png"></center>
+<p>This technique is a gold standard for measuring the model's true prediction error. We typically use 80% of our data for the training set and 20% of our data for the testing set. If we have a non-time series dataset we typically choose random rows from our train set and test set. If our data is time-series we choose the first 80% of the rows of data for the train and the last 20% of the rows for testing.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>Cross Validation:</h4></p>
+<p>Cross validation is a resampling technique that slits the data into $n$ folds. If we had 100 data points and we used 5-fold cross validation, we would create 5 folds with 20 data points each. The model building and error estimation process is repeated 5 times. Each of the 4 groups are combined to create 80 training data poitns. The 5th group of 20 data points is used to estimate the true prediction error. The process of cross validation (5-fold validation) is shown below:</p>
+<center><img src="Images/crossvalidation.png"></center>
+<p>Cross validation is very similar to the holdout method. It is different in the sence that each data point is used both to train the model and to test the model, but never at the same time. When we have limited data, cross-validation is preferred to a train/test split as less data must be set aside in each fold than is needed in the pure holdout method. An important questions of cross-validation is what number of folds to use. If we have a smaller number of folds, then we have more bias in the error estimates, but the less variable they will be.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>Overfitting/Underfitting:</h4></p>
+<p>The central challenge in machine learning is that our algorithm must perform well on new, previously unseen inputs. The ability to perform well on previously unobserved inputs is called <b>generalization</b>. The factors determining how well a machine learning algorithm will perform are its ability to:</p>
+<ol>
+<li>Make the training error small</li>
+<li>Make the gap between training and test error small</li>
+</ol>
+<p>The above two factors correspond to the two central challenges in machine learning: <b>underfitting</b> and <b>overfitting</b>. Underfitting occurs when the model is not able to obtain a sufficiently low error value on the training set. Overfitting occurs when the gap between the training error and test error is too large.</p>
+<center><img src="Images/overfitting.png"></center>
+<p>We can control wheter a model is more likely to overfit or underfit by altering its <b>capacity</b>. Models that overfit generally are too complex, having too many parameters relative to the number of observations. A model's capacity is its ability to fit a wide variety of functions. Models with low capacity may struggle to fit the training set. Models with high capacity can overfit by memorizing properties of the training set that do not serve them well on the test set. We can control the capacity of a learning algorithm by choosing its <b>hypothesis space</b>, the set of functions that the learning algorithm is allowed to select as being the solution. Machine learning algorithms will generally perform best when their capacity is appropriate for the true complexity of the task they need to perform and the amount of data they are provided with. Models with insufficient capacity are unable to solve complex tasks. Models with high capacity can solve complex tasks, but when their capacity is higher than needed to solve the present task, they may overfit.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>Bias-Variance Tradeoff:</h4></p>
+<p>Understanding how different sources of error lead to bias and variance helps us improve the data fitting process, which results in more accurate models.</p>
+<ul>
+<li><b>Error due to Bias </b> - The error due to bias is taken as the difference between the expected or average prediction of our model and the correct value which we are trying to predict. We only have one model, but can run our training and fitting multiple times. Due to randomness in the underlying datasets, the resulting model can have a range of predictions. Bias measures how far off in general these models' predictions are from the correct value.</li>
+<li><b>Error due to Variance </b> - The error due to variance is how much the predictions for a given point vary between different realizations of the model.</li>
+</ul>
+<p>We can depict the Bias-Variance Tradeoff as follows:</p>
+<center><img src="Images/bias_variance_tradeoff.png" style="height:400px;width:500px"></center>
+<p>We can create a graphical visualization of bias and variance using a bulls-eye diagram. Imagine that the center of the target is a model that perfectly predicts the correct values. As we move away from the bulls-eye, our predictions get worse and worse. Imagine we can repeat our entire model building process to get a number of separate hits on the target. Each hit represents an individual realization of our model, given the chance variability in the training data we gather. Sometimes we will get a good distribution of training data so we predict very well and we are close to the bulls-eye, while sometimes our training data might be full of outliers or non-standard values resulting in poorer predictions. These different realizations result in a scatter of hits on the target.</p><p>At its root, dealing with bias and variance is really about dealing with over and underfitting. As a model becomes more complex, the bias is reduced and the variance increases. When we add more and more parameters to a model, the complexity increases and variance becomes our main concern.</p>
+<center><img src="Images/optimal_model_complexity.png" style="height:400px;width:600px"></center>
+<p>We want to hit the sweet spot where bias and variance intersect so that we do not overfit or underfit our model. In practice, there is not an analytical way to find this location. Instead we must use an accurate measure of prediction error and explore differing levels of model complexity and then choose the complexity level that minimizes the overall error.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>Regularization:</h4></p>
+<p><p>Regularization is a way to correct overfitting by adding a pentalty on the different parameters of the model to reduce the freedom of the model. Hence, the model will be less likely to fir the noise of the training data and will improve generalization abilities of the model. There are a few popular regularization techniques:</p></p>
+<ul>
+<li><b> Lasso (L1 Regularization) </b> - </li>
+<li><b> Ridge (L2 Regularization) </b> - </li>
+<li><b> Elastic Net (L1/L2 Regularization) </b> - </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>The Curse of Dimensionality:</h4></p>
+<p>Machine learning problems become more difficult when the number of dimensions in the data is high. This phenomenon is known as the curse of dimensionality. This is of concern as the number of possible distinct configurations of a set of variables increases exponentially as the number of variables increases. An easy analogy is as follows: it is easy to catch a caterpillar moving in a tube (moving in 1 dimension). It is harder to catch a chicken running in a field (moving in 2 dimensions). It is even harder to catch two birds (moving in 3 dimensions). It is even harder to catch a ghost (moving in 3+ dimensions). Overall, the curse of dimensionality refers to how certain learning algorithms may perform poorly in high-dimensional data.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>Feature Selection:</h4></p>
+<p><p>A key question in machine learning is which features we should use to create a predictive model. This is a difficult question and may require specific domain knowledge. Feature selection allows us to automatically select those features in our data that are most useful or most relevant for the problem we are working on. Feature selection is different from dimensionality reduction. Both methods seek to reduce the number of attributes in the dataset, but a dimensionality reduction method does so by creating new combinations of attributes, whereas a feature selection method includes and excludes attributes that are present in the data without changing them. We use feature selection methods to identify and remove unneeded, irrelevant, and redundant attributes from data that do not contribute to the accuracy of a predictive model or may in fact decrease the accuracy of the model. There are three general classes of feature selection algorithms:</p></p>
+<ul>
+<li><b>Filter Methods </b> - Applying a statistical measure to score each feature. The features are ranked by score and either selected to be kept or removed from the dataset.</li>
+<li><b>Wrapper Methods </b> - Consider the selection of features as a search problem, where different combinations are prepared, evaluated, and compared to other combinations.</li>
+<li><b>Embedded Methods </b> - Learn which features best contribute to the accuracy of the model while the model is being created.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>The No Free Lunch Theorem:</h4></p>
+<p>The no free lunch theorem for machine learning states that, averaged over all possible data-generating distributions, every classification algorithm has the same error rate when classifying previously unobserved points. In some sense, this means that no machine learning algorithm is universally better than any other. The most sophisticated algorithm we can concieve of has the same average perforamnce (over all possible tasks) as merely predicting that every point belongs to the same class. This only holds when we average over all possible data-generating distributions. If we take any two machine learning algorithms and average the performance across all possible problems, then neither algorithm will be better than one another. So, no one model works best for all possible situations. Models only work better for particular situations depending on how the data is distributed. Thus, we must design our machine learning algorithm to perform well on a specific task.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>Hyperparameters:</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>Occam's Razor:</h4></p>
+<p>Many early scholars invoke a principle of parsimony that is now widely known as Occam's Razor. This principle states that among competing hypotheses that explain known observations equally well, we should choose the "simplest" one. If we have two models that have the same performance, we should choose the simpler model.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>Machine Learning Pipeline:</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<center><h1>Feature Selection</h1><span>Algorithms for for feature selection</span></center>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>Univariate Statistical Test using Chi-Squared for Classification:</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[128]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="k">import</span> <span class="n">SelectKBest</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="k">import</span> <span class="n">chi2</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[144]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># load data</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/pima-indians-diabetes/pima-indians-diabetes.data&quot;</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;preg&#39;</span><span class="p">,</span> <span class="s1">&#39;plas&#39;</span><span class="p">,</span> <span class="s1">&#39;pres&#39;</span><span class="p">,</span> <span class="s1">&#39;skin&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">,</span> <span class="s1">&#39;pedi&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">]</span>
+<span class="n">dataframe</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:,</span><span class="mi">8</span><span class="p">]</span>
+
+<span class="c1"># feature extraction</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">score_func</span><span class="o">=</span><span class="n">chi2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">fit</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># summarize scores</span>
+<span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Feature Scores: &quot;</span><span class="p">,</span><span class="n">fit</span><span class="o">.</span><span class="n">scores_</span><span class="p">)</span>
+<span class="n">best_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">scores_</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:]</span> 
+<span class="n">ls_best_features</span> <span class="o">=</span> <span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">best_features</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Features Best to worst: &#39;</span><span class="p">,</span><span class="n">ls_best_features</span><span class="p">)</span>
+
+<span class="n">features</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># summarize selected features</span>
+<span class="n">new_data</span> <span class="o">=</span> <span class="n">features</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Feature Scores:  [  111.52   1411.887    17.605    53.108  2175.565   127.669     5.393
+   181.304]
+Features Best to worst:  [&#39;test&#39;, &#39;plas&#39;, &#39;age&#39;, &#39;mass&#39;, &#39;preg&#39;, &#39;skin&#39;, &#39;pres&#39;, &#39;pedi&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><h4>Recursice Feature Elimination:</h4></p>
+<p>Recursively remove attributes and build a model on the attributes that remain:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[161]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">read_csv</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="k">import</span> <span class="n">RFE</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
+
+<span class="c1"># load data</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/pima-indians-diabetes/pima-indians-diabetes.data&quot;</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;preg&#39;</span><span class="p">,</span> <span class="s1">&#39;plas&#39;</span><span class="p">,</span> <span class="s1">&#39;pres&#39;</span><span class="p">,</span> <span class="s1">&#39;skin&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">,</span> <span class="s1">&#39;pedi&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">]</span>
+<span class="n">dataframe</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">array</span><span class="p">[:,</span><span class="mi">8</span><span class="p">]</span>
+<span class="c1"># feature extraction</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">rfe</span> <span class="o">=</span> <span class="n">RFE</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">fit</span> <span class="o">=</span> <span class="n">rfe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+<span class="n">selected_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">names</span><span class="p">)[</span><span class="n">fit</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of features: &quot;</span><span class="p">,</span> <span class="n">fit</span><span class="o">.</span><span class="n">n_features_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selected Features: &quot;</span><span class="p">,</span> <span class="n">selected_features</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Feature Ranking: &quot;</span><span class="p">,</span> <span class="n">fit</span><span class="o">.</span><span class="n">ranking_</span><span class="p">)</span> <span class="c1">#Choice is 1 if we should select the feature</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Number of features:  3
+Selected Features:  [&#39;preg&#39; &#39;mass&#39; &#39;pedi&#39;]
+Feature Ranking:  [1 2 3 5 6 1 1 4]
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/Adamlieberman/anaconda/envs/cse6240hw1/lib/python3.5/site-packages/ipykernel/__main__.py:16: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 0; dimension is 9 but corresponding boolean dimension is 8
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<center><h1>Classification Algorithms</h1><span>Building models for supervised classification</span></center>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>Support Vector Machine (SVM):</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Imports </span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">svm</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets.samples_generator</span> <span class="k">import</span> <span class="n">make_blobs</span><span class="p">,</span> <span class="n">make_classification</span> 
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">accuracy_score</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Load Data </span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1">#Create random train/test split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">svm_model</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">()</span>
+<span class="n">svm_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">Y_train</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">svm_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span><span class="n">preds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;accuracy: &#39;</span><span class="p">,</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>accuracy:  96.04 %
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>K-Nearest Neighbors:</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[90]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="k">import</span> <span class="n">KNeighborsClassifier</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">n_informative</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">knn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">Y_train</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span><span class="n">preds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;accuracy: &#39;</span><span class="p">,</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>accuracy:  82.4 %
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>Gaussian Discriminative Analysis (GDA):</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.gaussian_process</span> <span class="k">import</span> <span class="n">GaussianProcessClassifier</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">GaussianProcessClassifier</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">Y_train</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span><span class="n">preds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;accuracy: &#39;</span><span class="p">,</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>accuracy:  96.08 %
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>Gaussian Naive Bayes:</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>Decision Tree:</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>Random Forest:</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[122]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">n_informative</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span><span class="n">preds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;accuracy: &#39;</span><span class="p">,</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>accuracy:  88.4 %
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4>Logistic Regression:</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[127]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">n_informative</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">Y_train</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span><span class="n">preds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;accuracy: &#39;</span><span class="p">,</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>accuracy:  95.2 %
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<center><h1>Regression Algorithms</h1><span>Building models for supervised regression</span></center>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<center><h1>Clustering Algorithms</h1><span>Building models for unsupervised clustering</span></center>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<center><h1>Dimensionality Reduction Algorithms</h1><span>Building models for unsupervised dimensionality reduction</span></center>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<center><h1>Deep Learning</h1></center>
 </div>
 </div>
 </div>
